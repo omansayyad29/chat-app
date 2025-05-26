@@ -48,7 +48,7 @@ const Sidebar = ({ selectedUser, setSelectedUser }) => {
             <>
               <div
                 onClick={() => {
-                  selectedUser(user);
+                  setSelectedUser(user);
                 }}
                 key={index}
                 className={`relative flex items-center gap-2 p-2 pl-4 rounded cursor-pointer max-sm:text-sm ${
