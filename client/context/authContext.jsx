@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
       axios.defaults.headers.common["token"] = token;
     }
     checkAuth();
-  }, []);
+  }, [token]);
 
   //Login Function to handel user authentication and socket connection
 
