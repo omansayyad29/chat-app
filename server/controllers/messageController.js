@@ -36,7 +36,7 @@ export const getUsersForSideBar = async (req, res) => {
 };
 
 //get all messages for selected user
-export const getMesaages = async (req, res) => {
+export const getMessages  = async (req, res) => {
   try {
     const { id: selectedUserId } = req.params;
     const myId = req.user._id;
@@ -76,7 +76,7 @@ export const sendMessage = async (req, res) => {
     const { text, image } = req.body;
 
     const receiverId = req.params.id;
-    const senderId = req.user_id;
+    const senderId = req.user.id;
 
     let imageUrl;
     if (image) {

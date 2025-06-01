@@ -2,16 +2,34 @@ import React from "react";
 import assets from "../assets/assets";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
 
 const ProfilePage = () => {
+  const {authUser,updateProfile}=useContext(AuthContext)
   const [selectedImg, setSelectedImg] = useState(null);
   const navigate = useNavigate();
-  const [name, setName] = useState("Martin Jhonson");
-  const [bio, setBio] = useState("Hi Everyone, I am using Quickchat");
+  const [name, setName] = useState(authUser.fullName);
+  const [bio, setBio] = useState(authUser.bio);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!selectedImg)
+    {
+      await updateProfile({fullName:name,bio})
+      navigate("/");
+      return;
+    }
+    const reader=new FileReader();
+    reader.readAsDataURL(selectedImg);
+    reader.onload=async()=>{
+      const base64Image=reader.result; 
+      await updateProfile({profilePic:base64Image,fullName:name,bio})
     navigate("/");
+    }
+
+      return;
+    
   };
   return (
     <div className="min-h-screen bg-cover bg-no-repeat flex items-center justify-center">
@@ -69,7 +87,7 @@ const ProfilePage = () => {
           </button>
         </form>
         <img
-          src={assets.logo_icon}
+          src={authUser.profilePic||assets.logo_icon}
           alt=""
           className="max-w-44 aspect-square rounded-full mx-10 max-sm:mt-10"
         />
